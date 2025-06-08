@@ -3,262 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free all-in-one image tool: background remover, compressor, resizer, and image merger." />
-  <meta property="og:title" content="Free Image Tool Web App" />
-  <meta property="og:description" content="All-in-one free image tools: background remover, compressor, resizer, merger." />
-  <meta property="og:image" content="https://yourdomain.com/preview-image.jpg" />
-  <meta property="og:url" content="https://yourdomain.com" />
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <title>Free Image Multi-Tool App</title>
+  <title>All-in-One Image Tool</title>
+  <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.2.1/dist/compressor.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pica@8.0.0/dist/pica.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/merge-images"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; }
-    header, footer { background: #333; color: white; padding: 10px 20px; text-align: center; }
-    nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px; }
-    nav a, footer a { color: white; text-decoration: none; padding: 6px 10px; border-radius: 5px; background: #444; }
-    nav a:hover, footer a:hover { background: #555; }
-    .banner { padding: 20px; background: #f4f4f4; text-align: center; }
-    .tools { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; }
-    .tool-section { border: 1px solid #ccc; padding: 20px; width: 90%; max-width: 600px; display: none; }
-    .features, .social { padding: 20px; background: #eee; text-align: center; }
-    .social a { margin: 0 10px; display: inline-block; }
-    .social img { width: 24px; height: 24px; vertical-align: middle; }
-    input[type="file"], button, input[type="number"] { margin-top: 10px; display: block; width: 100%; max-width: 300px; }
-    canvas { max-width: 100%; }
-    .dropzone { border: 2px dashed #999; padding: 20px; margin-top: 10px; cursor: pointer; text-align: center; }
-    .dropzone.dragover { background-color: #eee; }
-    @media screen and (min-width: 600px) {
-      .tools { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .preview-container img {
+      max-width: 100%;
+      margin-top: 10px;
+    }
+    .social-icons img {
+      height: 32px;
+      width: 32px;
+      margin: 5px;
+      box-shadow: none;
+    }
+    .tool-box {
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Free Image Multi-Tool App</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Contact</a>
-      <a href="#">Support</a>
-      <a href="#">Download &#x1F4F1;</a>
-    </nav>
-  </header>
+  <h1>Welcome to the All-in-One Free Image Tool</h1>
+  <p>Remove backgrounds, compress, resize, or merge images easily from any device!</p>
 
-  <div class="banner">
-    <h2>Welcome to the All-in-One Free Image Tool</h2>
-    <p>Remove backgrounds, compress, resize, or merge images easily from any device!</p>
-  </div>
-
-  <section class="tools">
-    <button onclick="toggleTool('bgRemover')">Image Background Remover</button>
-    <button onclick="toggleTool('compressor')">Image Compressor</button>
-    <button onclick="toggleTool('resizer')">Image Resizer</button>
-    <button onclick="toggleTool('merger')">Merge Images</button>
-  </section>
-
-  <div id="bgRemover" class="tool-section">
-    <h3>Background Remover (powered by Remove.bg)</h3>
-    <input type="file" id="bgInput" accept="image/*" />
-    <div id="bgDrop" class="dropzone">Drag and drop image here</div>
-    <button onclick="removeBg()">Remove Background</button>
-    <a id="bgDownload" style="display:none" download="bg-removed.png">Download</a>
-  </div>
-
-  <div id="compressor" class="tool-section">
-    <h3>Image Compressor</h3>
-    <input type="file" id="compressInput" accept="image/*" />
-    <div id="compressDrop" class="dropzone">Drag and drop image here</div>
-    <button onclick="compressImage()">Compress</button>
-    <a id="compressDownload" style="display:none" download="compressed.jpg">Download</a>
-  </div>
-
-  <div id="resizer" class="tool-section">
-    <h3>Image Resizer</h3>
-    <input type="file" id="resizeInput" accept="image/*" />
-    <div id="resizeDrop" class="dropzone">Drag and drop image here</div>
+  <div class="tool-box">
+    <h2>Image Resizer</h2>
+    <input type="file" id="resizeInput" />
     <input type="number" id="resizeWidth" placeholder="Width" />
     <input type="number" id="resizeHeight" placeholder="Height" />
     <button onclick="resizeImage()">Resize</button>
-    <a id="resizeDownload" style="display:none" download="resized.png">Download</a>
+    <button onclick="resetTool('resizeInput')">New Task</button>
+    <div class="preview-container" id="resizePreview"></div>
   </div>
 
-  <div id="merger" class="tool-section">
-    <h3>Merge Images</h3>
-    <input type="file" id="mergeInput" accept="image/*" multiple />
-    <div id="mergeDrop" class="dropzone">Drag and drop images here</div>
+  <div class="tool-box">
+    <h2>Image Compressor</h2>
+    <input type="file" id="compressInput" />
+    <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8"> Quality
+    <button onclick="compressImage()">Compress</button>
+    <button onclick="resetTool('compressInput')">New Task</button>
+    <div class="preview-container" id="compressPreview"></div>
+  </div>
+
+  <div class="tool-box">
+    <h2>Merge Images</h2>
+    <input type="file" id="mergeInput1" />
+    <input type="file" id="mergeInput2" />
+    <label><input type="radio" name="direction" value="horizontal" checked /> Horizontal</label>
+    <label><input type="radio" name="direction" value="vertical" /> Vertical</label>
+    <label>Border: <input type="color" id="borderColor" value="#ffffff" /></label>
     <button onclick="mergeImagesTool()">Merge</button>
-    <a id="mergeDownload" style="display:none" download="merged.png">Download</a>
+    <button onclick="resetTool('mergeInput1', 'mergeInput2')">New Task</button>
+    <div class="preview-container" id="mergePreview"></div>
   </div>
 
-  <div class="features">
-    <h3>Tool Features</h3>
-    <p><strong>Background Remover:</strong> Powered by Remove.bg API (free tier with registration).</p>
-    <p><strong>Compressor:</strong> Compress images to smaller sizes without losing quality.</p>
-    <p><strong>Resizer:</strong> Resize images using high-quality scaling (pica.js).</p>
-    <p><strong>Image Merger:</strong> Merge multiple images into one high-quality file.</p>
+  <div class="social-icons">
+    <a href="#"><img src="facebook.png" alt="Facebook"></a>
+    <a href="#"><img src="twitter.png" alt="Twitter"></a>
+    <a href="#"><img src="instagram.png" alt="Instagram"></a>
   </div>
-
-  <footer>
-    <nav>
-      <a href="#" target="_blank">Privacy Policy</a>
-      <a href="#" target="_blank">Terms & Condition</a>
-    </nav>
-    <div class="social">
-      <a href="https://facebook.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" /></a>
-      <a href="https://instagram.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" /></a>
-      <a href="https://linkedin.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" /></a>
-      <a href="https://youtube.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" /></a>
-    </div>
-  </footer>
 
   <script>
-    const REMOVE_BG_API_KEY = 'h4CXMtirKevH8UxWQHDSpRxX';
-
-    function toggleTool(id) {
-      document.querySelectorAll('.tool-section').forEach(tool => tool.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
+    function resetTool(...ids) {
+      ids.forEach(id => document.getElementById(id).value = "");
+      document.querySelectorAll('.preview-container').forEach(el => el.innerHTML = '');
     }
 
-    function setupDropzone(dropzoneId, fileInputId) {
-      const dropzone = document.getElementById(dropzoneId);
-      const fileInput = document.getElementById(fileInputId);
-      dropzone.addEventListener('dragover', e => {
-        e.preventDefault();
-        dropzone.classList.add('dragover');
-      });
-      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-      dropzone.addEventListener('drop', e => {
-        e.preventDefault();
-        dropzone.classList.remove('dragover');
-        fileInput.files = e.dataTransfer.files;
+    function resizeImage() {
+      const file = document.getElementById('resizeInput').files[0];
+      const width = parseInt(document.getElementById('resizeWidth').value);
+      const height = parseInt(document.getElementById('resizeHeight').value);
+      if (!file || !width || !height) return alert('Provide all inputs');
+
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = e => {
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/png');
+          document.getElementById('resizePreview').innerHTML = `<img src="${dataUrl}"><a download="resized.png" href="${dataUrl}">Download</a>`;
+        }
+        img.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+
+    function compressImage() {
+      const file = document.getElementById('compressInput').files[0];
+      const quality = parseFloat(document.getElementById('quality').value);
+      if (!file || !quality) return alert('Provide file and quality');
+
+      new Compressor(file, {
+        quality: quality,
+        success(result) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            document.getElementById('compressPreview').innerHTML = `<img src="${reader.result}"><a download="compressed.jpg" href="${reader.result}">Download</a>`;
+          }
+          reader.readAsDataURL(result);
+        },
+        error(err) {
+          alert('Compression failed: ' + err.message);
+        }
       });
     }
 
-    ['bgDrop:bgInput', 'compressDrop:compressInput', 'resizeDrop:resizeInput', 'mergeDrop:mergeInput']
-      .forEach(pair => {
-        const [drop, input] = pair.split(':');
-        setupDropzone(drop, input);
-      });
+    function mergeImagesTool() {
+      const files = [
+        document.getElementById('mergeInput1').files[0],
+        document.getElementById('mergeInput2').files[0]
+      ];
+      const direction = document.querySelector('input[name="direction"]:checked').value;
+      const borderColor = document.getElementById('borderColor').value;
+      if (!files[0] || !files[1]) return alert('Upload both images');
 
-    function removeBg() {
-      const input = document.getElementById('bgInput');
-      const file = input.files[0];
-      if (!file) return alert('Please select an image.');
-
-      const formData = new FormData();
-      formData.append('image_file', file);
-      formData.append('size', 'auto');
-
-      fetch('https://api.remove.bg/v1.0/removebg', {
-        method: 'POST',
-        headers: { 'X-Api-Key': REMOVE_BG_API_KEY },
-        body: formData
-      })
-      .then(res => res.blob())
-      .then(blob => {
-        const url = URL.createObjectURL(blob);
-        const downloadLink = document.getElementById('bgDownload');
-        downloadLink.href = url;
-        downloadLink.style.display = 'inline-block';
-      })
-      .catch(err => alert('Error removing background: ' + err.message));
-    }
-    // Resize Image Tool
-async function resizeImage() {
-  const fileInput = document.getElementById("resizeInput");
-  const width = parseInt(document.getElementById("resizeWidth").value);
-  const height = parseInt(document.getElementById("resizeHeight").value);
-  const downloadLink = document.getElementById("resizeDownload");
-
-  if (!fileInput.files.length || !width || !height) {
-    alert("Please select an image and provide both width and height.");
-    return;
-  }
-
-  const file = fileInput.files[0];
-  const img = new Image();
-  const reader = new FileReader();
-
-  reader.onload = function (e) {
-    img.src = e.target.result;
-    img.onload = function () {
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-
-      const picaResizer = pica();
-      const offscreenCanvas = document.createElement("canvas");
-      offscreenCanvas.width = img.width;
-      offscreenCanvas.height = img.height;
-      const ctx = offscreenCanvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-
-      picaResizer
-        .resize(offscreenCanvas, canvas)
-        .then(() => picaResizer.toBlob(canvas, "image/png", 1))
-        .then((blob) => {
-          downloadLink.href = URL.createObjectURL(blob);
-          downloadLink.style.display = "inline-block";
-        });
-    };
-  };
-  reader.readAsDataURL(file);
-}
-
-// Image Compressor
-function compressImage() {
-  const fileInput = document.getElementById("compressInput");
-  const downloadLink = document.getElementById("compressDownload");
-
-  if (!fileInput.files.length) {
-    alert("Please upload an image to compress.");
-    return;
-  }
-
-  const file = fileInput.files[0];
-  new Compressor(file, {
-    quality: 0.6,
-    success(result) {
-      const url = URL.createObjectURL(result);
-      downloadLink.href = url;
-      downloadLink.style.display = "inline-block";
-    },
-    error(err) {
-      alert("Compression failed: " + err.message);
-    },
-  });
-}
-
-// Merge Images Tool
-function mergeImagesTool() {
-  const input = document.getElementById("mergeInput");
-  const downloadLink = document.getElementById("mergeDownload");
-  const files = input.files;
-
-  if (!files.length || files.length < 2) {
-    alert("Please upload at least two images to merge.");
-    return;
-  }
-
-  const readers = [];
-  for (let i = 0; i < files.length; i++) {
-    readers.push(
-      new Promise((resolve) => {
+      Promise.all(files.map(f => new Promise(resolve => {
         const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.readAsDataURL(files[i]);
-      })
-    );
-  }
-
-  Promise.all(readers).then((base64Images) => {
-    mergeImages(base64Images, { direction: "vertical" }).then((b64) => {
-      downloadLink.href = b64;
-      downloadLink.style.display = "inline-block";
-    });
-  });
-}
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(f);
+      }))).then(imgData => {
+        mergeImages(imgData, {
+          direction,
+          margin: 10,
+          backgroundColor: borderColor
+        }).then(b64 => {
+          document.getElementById('mergePreview').innerHTML = `<img src="${b64}"><a download="merged.png" href="${b64}">Download</a>`;
+        });
+      });
+    }
   </script>
 </body>
 </html>
