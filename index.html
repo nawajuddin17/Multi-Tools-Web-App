@@ -164,6 +164,101 @@
       })
       .catch(err => alert('Error removing background: ' + err.message));
     }
+    // Resize Image Tool
+async function resizeImage() {
+  const fileInput = document.getElementById("resizeInput");
+  const width = parseInt(document.getElementById("resizeWidth").value);
+  const height = parseInt(document.getElementById("resizeHeight").value);
+  const downloadLink = document.getElementById("resizeDownload");
+
+  if (!fileInput.files.length || !width || !height) {
+    alert("Please select an image and provide both width and height.");
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const img = new Image();
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    img.src = e.target.result;
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const picaResizer = pica();
+      const offscreenCanvas = document.createElement("canvas");
+      offscreenCanvas.width = img.width;
+      offscreenCanvas.height = img.height;
+      const ctx = offscreenCanvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      picaResizer
+        .resize(offscreenCanvas, canvas)
+        .then(() => picaResizer.toBlob(canvas, "image/png", 1))
+        .then((blob) => {
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.style.display = "inline-block";
+        });
+    };
+  };
+  reader.readAsDataURL(file);
+}
+
+// Image Compressor
+function compressImage() {
+  const fileInput = document.getElementById("compressInput");
+  const downloadLink = document.getElementById("compressDownload");
+
+  if (!fileInput.files.length) {
+    alert("Please upload an image to compress.");
+    return;
+  }
+
+  const file = fileInput.files[0];
+  new Compressor(file, {
+    quality: 0.6,
+    success(result) {
+      const url = URL.createObjectURL(result);
+      downloadLink.href = url;
+      downloadLink.style.display = "inline-block";
+    },
+    error(err) {
+      alert("Compression failed: " + err.message);
+    },
+  });
+}
+
+// Merge Images Tool
+function mergeImagesTool() {
+  const input = document.getElementById("mergeInput");
+  const downloadLink = document.getElementById("mergeDownload");
+  const files = input.files;
+
+  if (!files.length || files.length < 2) {
+    alert("Please upload at least two images to merge.");
+    return;
+  }
+
+  const readers = [];
+  for (let i = 0; i < files.length; i++) {
+    readers.push(
+      new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.readAsDataURL(files[i]);
+      })
+    );
+  }
+
+  Promise.all(readers).then((base64Images) => {
+    mergeImages(base64Images, { direction: "vertical" }).then((b64) => {
+      downloadLink.href = b64;
+      downloadLink.style.display = "inline-block";
+    });
+  });
+}
   </script>
 </body>
 </html>
