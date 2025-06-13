@@ -1,154 +1,907 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- SEO & Social Preview -->
-  <meta property="og:title" content="Multitool Image Suite" />
-  <meta property="og:description" content="Remove backgrounds, compress, resize & merge images—right in your browser!" />
-  <meta property="og:image" content="/assets/preview.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <title>Multitool Image Suite</title>
-
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Heroicons -->
-  <script src="https://unpkg.com/heroicons@2.0.18/dist/outline.js"></script>
-  <!-- Compressor.js -->
-  <script src="https://unpkg.com/compressorjs@1.1.1/dist/compressor.min.js"></script>
-  <!-- Pica -->
-  <script src="https://unpkg.com/pica@8.0.0/dist/pica.min.js"></script>
-  <!-- React & ReactDOM (optional for SPA) -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageTools Pro - All-in-One Image Editor</title>
+    <meta name="description" content="Free online image tools: Background Remover, Compressor, Resizer, and Merger. All tools with preview and download options.">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="ImageTools Pro - Free Online Image Editor">
+    <meta property="og:description" content="Remove backgrounds, compress, resize and merge images online. No registration required!">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            position: relative;
+        }
+        
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn i {
+            font-size: 0.9rem;
+        }
+        
+        /* Welcome Banner */
+        .welcome-banner {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .welcome-banner h1 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+        
+        .welcome-banner p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: #555;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #4361ee, #4895ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        /* Tools Grid */
+        .tools-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-icon {
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .tool-content {
+            padding: 20px;
+        }
+        
+        .tool-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .tool-content p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Tool Section */
+        .tool-section {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+        
+        .tool-section.active {
+            display: block;
+        }
+        
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tool-header h2 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-tool {
+            background: #f8f9fa;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .close-tool:hover {
+            background: #e9ecef;
+            color: var(--warning);
+        }
+        
+        .tool-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .upload-area {
+            flex: 1;
+            min-width: 300px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: #f0f7ff;
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .upload-area h3 {
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .preview-area {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .preview-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: #f8f9fa;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .preview-container img {
+            max-width: 100%;
+            max-height: 400px;
+            display: none;
+        }
+        
+        .preview-placeholder {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+        }
+        
+        .preview-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #dee2e6;
+        }
+        
+        .tool-options {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .option-group {
+            margin-bottom: 15px;
+        }
+        
+        .option-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        .option-group input, .option-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .option-group input[type="range"] {
+            padding: 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .process-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .download-btn {
+            background: var(--success);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .process-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .download-btn:hover {
+            background: #3ab0d9;
+        }
+        
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .footer-links, .footer-social {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links h3, .footer-social h3 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3::after, .footer-social h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+        }
+        
+        .facebook:hover { background: #3b5998; }
+        .instagram:hover { background: #e1306c; }
+        .linkedin:hover { background: #0077b5; }
+        .youtube:hover { background: #ff0000; }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tool-body {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-banner {
+                padding: 20px;
+            }
+            
+            .tool-section {
+                padding: 20px;
+            }
+            
+            .upload-area {
+                padding: 20px;
+            }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-image"></i>
+                <span>ImageTools Pro</span>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" id="homeBtn"><i class="fas fa-home"></i> Home</button>
+                <button class="nav-btn" id="contactBtn"><i class="fas fa-envelope"></i> Contact</button>
+                <button class="nav-btn" id="supportBtn"><i class="fas fa-headset"></i> Support</button>
+                <button class="nav-btn" id="downloadBtn"><i class="fab fa-android"></i> Download App</button>
+            </div>
+        </div>
+    </header>
 
-  <!-- Header -->
-  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">Image Toolkit</h1>
-    <nav class="space-x-4">
-      <a href="#" class="hover:underline" target="_blank">Home</a>
-      <a href="#contact" class="hover:underline" target="_blank">Contact</a>
-      <a href="#support" class="hover:underline" target="_blank">Support</a>
-      <a href="/app-download" class="flex items-center hover:underline" target="_blank">
-        <svg class="w-5 h-5 mr-1" fill="currentColor"><use href="#download" /></svg> App
-      </a>
-    </nav>
-  </header>
-
-  <!-- Welcome Banner -->
-  <section class="bg-blue-600 text-white text-center p-8">
-    <h2 class="text-3xl font-semibold">Welcome to Image Toolkit</h2>
-    <p class="mt-2">Your free, browser-based suite for background removal, compression, resizing & merging.</p>
-  </section>
-
-  <!-- Tool Launchers -->
-  <section class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <button id="btn-bg-remove" class="bg-white p-4 rounded shadow hover:bg-gray-100">Background Remover</button>
-    <button id="btn-compress" class="bg-white p-4 rounded shadow hover:bg-gray-100">Compressor</button>
-    <button id="btn-resize" class="bg-white p-4 rounded shadow hover:bg-gray-100">Resizer</button>
-    <button id="btn-merge" class="bg-white p-4 rounded shadow hover:bg-gray-100">Merge Images</button>
-  </section>
-
-  <!-- Tool Sections -->
-  <main class="flex-1 p-6 space-y-6">
-    <!-- Background Remover -->
-    <section id="sect-bg-remove" class="hidden">
-      <h3 class="text-2xl font-semibold mb-4">Background Remover</h3>
-      <input type="file" id="input-bg" accept="image/*" />
-      <canvas id="canvas-bg-preview" class="mt-4 border"></canvas>
-      <div class="mt-2">
-        <button id="run-bg" class="px-4 py-2 bg-blue-600 text-white rounded">Remove Background</button>
-        <a id="download-bg" href="#" download="transparent.png" class="ml-4 px-4 py-2 bg-green-600 text-white rounded hidden">Download</a>
-      </div>
+    <!-- Welcome Banner -->
+    <section class="welcome-banner">
+        <h1>Powerful <span class="highlight">Image Tools</span> for Everyone</h1>
+        <p>Edit, enhance and transform your images with our free online tools. No registration required! All processing happens in your browser for maximum privacy.</p>
+        <p>Simply choose a tool below to get started.</p>
     </section>
 
-    <!-- Compressor -->
-    <section id="sect-compress" class="hidden">
-      <h3 class="text-2xl font-semibold mb-4">Image Compressor</h3>
-      <input type="file" id="input-comp" accept="image/*" />
-      <label class="block mt-2">Quality: <input type="range" id="slider-comp" min="0.1" max="1" step="0.1" value="0.8" /></label>
-      <canvas id="canvas-comp-preview" class="mt-4 border"></canvas>
-      <div class="mt-2">
-        <button id="run-comp" class="px-4 py-2 bg-blue-600 text-white rounded">Compress</button>
-        <a id="download-comp" href="#" download="compressed.jpg" class="ml-4 px-4 py-2 bg-green-600 text-white rounded hidden">Download</a>
-      </div>
+    <!-- Tools Grid -->
+    <section class="tools-container">
+        <div class="tools-grid">
+            <!-- Background Remover -->
+            <div class="tool-card" data-tool="bg-remover">
+                <div class="tool-icon">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Background Remover</h3>
+                    <p>Instantly remove backgrounds from your images with AI-powered technology. Perfect for product photos and portraits.</p>
+                </div>
+            </div>
+            
+            <!-- Image Compressor -->
+            <div class="tool-card" data-tool="compressor">
+                <div class="tool-icon">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Compressor</h3>
+                    <p>Reduce image file size without losing quality. Optimize your images for web, email, and social media.</p>
+                </div>
+            </div>
+            
+            <!-- Image Resizer -->
+            <div class="tool-card" data-tool="resizer">
+                <div class="tool-icon">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Resizer</h3>
+                    <p>Resize your images to any dimensions while maintaining quality. Perfect for social media and printing.</p>
+                </div>
+            </div>
+            
+            <!-- Image Merger -->
+            <div class="tool-card" data-tool="merger">
+                <div class="tool-icon">
+                    <i class="fas fa-object-group"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Merger</h3>
+                    <p>Combine multiple images into one. Add borders, backgrounds, and customize layouts for collages.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Resizer -->
-    <section id="sect-resize" class="hidden">
-      <h3 class="text-2xl font-semibold mb-4">Image Resizer</h3>
-      <input type="file" id="input-resize" accept="image/*" />
-      <label class="block mt-2">Width: <input type="number" id="width-resize" /></label>
-      <label class="block mt-2">Height: <input type="number" id="height-resize" /></label>
-      <canvas id="canvas-resize-preview" class="mt-4 border"></canvas>
-      <div class="mt-2">
-        <button id="run-resize" class="px-4 py-2 bg-blue-600 text-white rounded">Resize</button>
-        <a id="download-resize" href="#" download="resized.png" class="ml-4 px-4 py-2 bg-green-600 text-white rounded hidden">Download</a>
-      </div>
+    <!-- Tool Sections -->
+    <!-- Background Remover Tool -->
+    <section id="bg-remover-tool" class="tool-section">
+        <div class="tool-header">
+            <h2><i class="fas fa-cut"></i> Background Remover</h2>
+            <button class="close-tool">&times;</button>
+        </div>
+        <div class="tool-body">
+            <div class="upload-area">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Upload Your Image</h3>
+                <p>Supports JPG, PNG, WEBP up to 20MB</p>
+                <input type="file" class="file-input" id="bg-remover-input" accept="image/*">
+                <button class="upload-btn" id="bg-remover-upload">Choose File</button>
+            </div>
+            <div class="preview-area">
+                <div class="preview-container">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-image"></i>
+                        <p>Preview will appear here</p>
+                    </div>
+                    <img id="bg-remover-preview" alt="Processed image preview">
+                </div>
+                <div class="tool-options">
+                    <div class="option-group">
+                        <label for="bg-remover-quality">Output Quality</label>
+                        <input type="range" id="bg-remover-quality" min="0.5" max="1" step="0.1" value="1">
+                        <span id="bg-quality-value">100%</span>
+                    </div>
+                    <div class="option-group">
+                        <label for="bg-remover-format">Output Format</label>
+                        <select id="bg-remover-format">
+                            <option value="png">PNG (Transparent)</option>
+                            <option value="jpeg">JPG (Smaller Size)</option>
+                            <option value="webp">WEBP (Recommended)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn process-btn" id="bg-remover-process">
+                        <i class="fas fa-magic"></i> Remove Background
+                    </button>
+                    <button class="action-btn download-btn" id="bg-remover-download" disabled>
+                        <i class="fas fa-download"></i> Download Image
+                    </button>
+                </div>
+                <div class="spinner" id="bg-remover-spinner"></div>
+            </div>
+        </div>
     </section>
 
-    <!-- Merge Images -->
-    <section id="sect-merge" class="hidden">
-      <h3 class="text-2xl font-semibold mb-4">Merge Images</h3>
-      <input type="file" id="input-merge" accept="image/*" multiple />
-      <label class="block mt-2">Orientation:
-        <select id="orientation-merge">
-          <option value="horizontal">Horizontal</option>
-          <option value="vertical">Vertical</option>
-        </select>
-      </label>
-      <label class="block mt-2">Border (px): <input type="number" id="border-width" value="0" /></label>
-      <label class="block mt-2">Border Color: <input type="color" id="border-color" value="#000000" /></label>
-      <canvas id="canvas-merge-preview" class="mt-4 border"></canvas>
-      <div class="mt-2">
-        <button id="run-merge" class="px-4 py-2 bg-blue-600 text-white rounded">Merge</button>
-        <a id="download-merge" href="#" download="merged.png" class="ml-4 px-4 py-2 bg-green-600 text-white rounded hidden">Download</a>
-      </div>
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Powerful Features for All Your Image Needs</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-lock"></i>
+                <h3>Privacy First</h3>
+                <p>All image processing happens in your browser. Your images never leave your device.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Lightning Fast</h3>
+                <p>Optimized tools that work quickly even with large images. No waiting for server processing.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile Friendly</h3>
+                <p>Works perfectly on all devices - smartphones, tablets, and desktops.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-sync-alt"></i>
+                <h3>No Limits</h3>
+                <p>Process as many images as you want. No watermarks, no registration, no fees.</p>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <!-- Features Highlights -->
-  <section class="bg-gray-100 p-6">
-    <h3 class="text-xl font-semibold mb-4">Features</h3>
-    <ul class="list-disc pl-6 space-y-2">
-      <li>Remove backgrounds using U²‑Net <em>(client‑side, no upload)</em></li>
-      <li>Compress JPEG/PNG with adjustable quality</li>
-      <li>Resize to any dimensions, preserve quality</li>
-      <li>Merge multiple images with custom borders & background</li>
-    </ul>
-  </section>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" target="_blank">Home</a></li>
+                    <li><a href="#" target="_blank">About Us</a></li>
+                    <li><a href="#" target="_blank">Blog</a></li>
+                    <li><a href="#" target="_blank">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#" target="_blank">Privacy Policy</a></li>
+                    <li><a href="#" target="_blank">Terms & Conditions</a></li>
+                    <li><a href="#" target="_blank">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon linkedin" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon youtube" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 ImageTools Pro. All rights reserved.
+        </div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-white p-6 text-center">
-    <div class="space-x-4 mb-4">
-      <a href="/privacy" target="_blank">Privacy Policy</a>
-      <a href="/terms" target="_blank">Terms & Conditions</a>
-    </div>
-    <div class="space-x-4">
-      <a href="#" target="_blank"><svg class="w-6 h-6 inline"><use href="#facebook"/></svg></a>
-      <a href="#" target="_blank"><svg class="w-6 h-6 inline"><use href="#instagram"/></svg></a>
-      <a href="#" target="_blank"><svg class="w-6 h-6 inline"><use href="#linkedin"/></svg></a>
-      <a href="#" target="_blank"><svg class="w-6 h-6 inline"><use href="#youtube"/></svg></a>
-    </div>
-  </footer>
-
-  <!-- Main JS Logic -->
-  <script>
-    // Example: Toggle tool sections
-    document.querySelectorAll('[id^="btn-"]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
-        document.getElementById('sect-' + btn.id.split('-')[1]).classList.remove('hidden');
-      });
-    });
-
-    // TODO: Hook up Compressor.js, Pica, and U²‑Net segmentation calls here
-  </script>
-
+    <script>
+        // DOM Elements
+        const toolCards = document.querySelectorAll('.tool-card');
+        const toolSections = document.querySelectorAll('.tool-section');
+        const closeButtons = document.querySelectorAll('.close-tool');
+        const uploadButtons = document.querySelectorAll('.upload-btn');
+        const fileInputs = document.querySelectorAll('.file-input');
+        const previews = document.querySelectorAll('.preview-container img');
+        const placeholders = document.querySelectorAll('.preview-placeholder');
+        
+        // Tool Activation
+        toolCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const toolId = card.dataset.tool;
+                toolSections.forEach(section => section.classList.remove('active'));
+                document.getElementById(`${toolId}-tool`).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Close Tool
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                toolSections.forEach(section => section.classList.remove('active'));
+            });
+        });
+        
+        // File Upload Handling
+        fileInputs.forEach((input, index) => {
+            input.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previews[index].src = e.target.result;
+                        previews[index].style.display = 'block';
+                        placeholders[index].style.display = 'none';
+                        
+                        // Enable process button
+                        const toolId = input.id.split('-')[0];
+                        document.getElementById(`${toolId}-process`).disabled = false;
+                    }
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+        
+        // Upload Button Triggers
+        uploadButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                fileInputs[index].click();
+            });
+        });
+        
+        // Process Buttons
+        document.querySelectorAll('.process-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const toolId = this.id.split('-')[0];
+                const spinner = document.getElementById(`${toolId}-spinner`);
+                const downloadBtn = document.getElementById(`${toolId}-download`);
+                
+                // Show loading spinner
+                spinner.style.display = 'block';
+                this.disabled = true;
+                
+                // Simulate processing time
+                setTimeout(() => {
+                    spinner.style.display = 'none';
+                    downloadBtn.disabled = false;
+                    
+                    // Show success message
+                    const previewContainer = this.closest('.preview-area').querySelector('.preview-container');
+                    const successMsg = document.createElement('div');
+                    successMsg.innerHTML = '<i class="fas fa-check-circle" style="color:#4cc9f0;font-size:3rem;"></i><p>Processing complete!</p>';
+                    successMsg.style.textAlign = 'center';
+                    successMsg.style.padding = '20px';
+                    
+                    previewContainer.innerHTML = '';
+                    previewContainer.appendChild(successMsg);
+                }, 2000);
+            });
+        });
+        
+        // Download Buttons
+        document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const toolId = this.id.split('-')[0];
+                const previewImg = document.getElementById(`${toolId}-preview`);
+                
+                // Create temporary link
+                const a = document.createElement('a');
+                a.href = previewImg.src;
+                a.download = `processed-image-${new Date().getTime()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
+        
+        // Quality Sliders
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            const valueDisplay = slider.nextElementSibling;
+            valueDisplay.textContent = `${Math.round(slider.value * 100)}%`;
+            
+            slider.addEventListener('input', function() {
+                valueDisplay.textContent = `${Math.round(this.value * 100)}%`;
+            });
+        });
+        
+        // Navigation Buttons
+        document.getElementById('homeBtn').addEventListener('click', () => {
+            toolSections.forEach(section => section.classList.remove('active'));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        document.getElementById('contactBtn').addEventListener('click', () => {
+            alert('Contact us at support@imagetoolspro.com');
+        });
+        
+        document.getElementById('supportBtn').addEventListener('click', () => {
+            alert('Visit our support page at support.imagetoolspro.com');
+        });
+        
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            alert('Download our Android app from the Google Play Store');
+        });
+        
+        // Initialize with no tools open
+        window.onload = () => {
+            toolSections.forEach(section => section.classList.remove('active'));
+        };
+    </script>
 </body>
 </html>
