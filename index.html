@@ -3,974 +3,902 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImageTools Pro - All-in-One Image Editor</title>
-    <!-- Social Media Meta Tags -->
-    <meta property="og:title" content="ImageTools Pro - Free Online Image Editor">
-    <meta property="og:description" content="Remove backgrounds, compress, resize, and merge images with our free online tools!">
-    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=ImageTools+Pro">
-    <meta property="og:url" content="https://yourdomain.com">
+    <title>MultiTool Web App - Image Tools</title>
+    
+    <!-- Meta tags for social sharing -->
+    <meta property="og:title" content="MultiTool Web App - Free Image Tools">
+    <meta property="og:description" content="Your go-to online tools for image background removal, compression, resizing, and merging.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=MultiToolApp_Preview"> <!-- Replace with your actual preview image URL -->
+    <meta property="og:url" content="https://yourdomain.com"> <!-- Replace with your actual site URL -->
+    <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="twitter:title" content="MultiTool Web App - Free Image Tools">
+    <meta name="twitter:description" content="Your go-to online tools for image background removal, compression, resizing, and merging.">
+    <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=MultiToolApp_Preview"> <!-- Replace with your actual preview image URL -->
+
+    <!-- Font Awesome for icons (social media, download icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4895ef;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4cc9f0;
-            --warning: #f72585;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --text-color: #333;
+            --light-text-color: #fff;
+            --border-color: #dee2e6;
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            color: var(--dark);
             line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            padding-bottom: 60px;
-        }
-
-        /* Header Styles */
-        header {
-            background: white;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
-        .header-container {
+        /* Header */
+        header {
+            background-color: var(--dark-bg);
+            color: var(--light-text-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        header .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-menu li {
-            margin-left: 25px;
-        }
-
-        .nav-menu a {
+        header .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--light-text-color);
             text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 1rem;
-            transition: var(--transition);
+            margin-right: 20px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .download-app {
+            background-color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: var(--light-text-color);
             display: flex;
             align-items: center;
+            transition: background-color 0.3s ease;
         }
-
-        .nav-menu a:hover {
-            color: var(--primary);
+        .download-app:hover {
+            background-color: #0056b3;
         }
-
-        .nav-menu a i {
+        .download-app i {
             margin-right: 5px;
         }
 
-        .download-btn {
-            background: var(--primary);
-            color: white !important;
-            padding: 8px 15px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1500x500/007bff/ffffff?text=Image+Tools+Banner') no-repeat center center/cover;
+            color: var(--light-text-color);
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 30px;
+        }
+        .welcome-banner h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+        }
+        .welcome-banner p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .download-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
+        /* Tool Buttons */
+        .tool-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
-
-        .mobile-menu-btn {
-            display: none;
-            font-size: 1.5rem;
+        .tool-button {
+            background-color: var(--light-text-color);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .tool-button:hover {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .tool-button i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: var(--primary-color); /* Default icon color */
+            transition: color 0.3s ease;
+        }
+        .tool-button:hover i {
+            color: var(--light-text-color); /* Icon color on hover */
+        }
+        .tool-button h3 {
+            font-size: 1.4em;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 60px 0;
-            text-align: center;
-            background: linear-gradient(to right, #4361ee, #3a0ca3);
-            color: white;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 40px;
+        /* Tool Sections */
+        .tool-section {
+            background-color: var(--light-text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: none; /* Hidden by default */
         }
-
-        .hero h1 {
-            font-size: 2.8rem;
+        .tool-section.active {
+            display: block; /* Shown when active */
+        }
+        .tool-section h2 {
+            font-size: 2em;
             margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: var(--primary-color);
+        }
+        .tool-section .input-group {
+            margin-bottom: 20px;
+        }
+        .tool-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .tool-section input[type="file"] {
+            display: block;
+            margin-bottom: 15px;
+        }
+        .tool-section input[type="range"],
+        .tool-section input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .tool-section button {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+        .tool-section button:hover {
+            background-color: #0056b3;
+        }
+        .tool-section .preview-area {
+            margin-top: 30px;
+            border: 1px dashed var(--border-color);
+            padding: 20px;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-bg);
+            flex-direction: column;
+        }
+        .tool-section .preview-area img {
+            max-width: 100%;
+            max-height: 400px;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tool-section .preview-area canvas {
+            max-width: 100%;
+            max-height: 400px;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+        .tool-section .message {
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--secondary-color);
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-
-        .cta-btn {
-            display: inline-block;
-            background: white;
-            color: var(--primary);
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-        }
-
-        /* Tools Section */
-        .tools-section {
-            padding: 30px 0;
-        }
-
-        .section-title {
+        /* Feature Contents */
+        .features-section {
+            padding: 40px 0;
+            background-color: var(--light-bg);
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.2rem;
-            color: var(--dark);
         }
-
-        .tools-container {
+        .features-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        .feature-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            margin-bottom: 60px;
         }
-
-        .tool-card {
-            background: white;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-            text-align: center;
+        .feature-card {
+            background-color: var(--light-text-color);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: left;
         }
-
-        .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-        }
-
-        .tool-icon {
-            background: linear-gradient(to right, var(--accent), var(--primary));
-            height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-            color: white;
-        }
-
-        .tool-content {
-            padding: 25px 20px;
-        }
-
-        .tool-content h3 {
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .tool-content p {
-            color: var(--gray);
-            margin-bottom: 20px;
-        }
-
-        .tool-btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .tool-btn:hover {
-            background: var(--secondary);
-        }
-
-        /* Tool Functions Section */
-        .tool-functions {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 30px;
-            margin-bottom: 40px;
-            display: none;
-        }
-
-        .tool-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .tool-header h2 {
-            color: var(--primary);
-        }
-
-        .close-tool {
-            background: var(--light-gray);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .close-tool:hover {
-            background: var(--warning);
-            color: white;
-        }
-
-        .tool-body {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .upload-area {
-            flex: 1;
-            min-width: 300px;
-            border: 2px dashed var(--accent);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            text-align: center;
-            background: rgba(67, 97, 238, 0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .upload-icon {
-            font-size: 3.5rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .file-label {
-            background: var(--primary);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 15px;
-            font-weight: 500;
-        }
-
-        .file-label:hover {
-            background: var(--secondary);
-        }
-
-        .preview-area {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .preview-title {
-            color: var(--dark);
+        .feature-card h3 {
+            color: var(--primary-color);
             margin-bottom: 10px;
         }
-
-        .preview-container {
-            border: 1px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            background: var(--light);
-            min-height: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .preview-img {
-            max-width: 100%;
-            max-height: 300px;
-            display: none;
-        }
-
-        .options-area {
-            background: var(--light);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .options-title {
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .option-group {
-            margin-bottom: 15px;
-        }
-
-        .option-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .option-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--light-gray);
-            border-radius: 8px;
-        }
-
-        .download-btn-container {
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .download-result {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(76, 201, 240, 0.4);
-        }
-
-        .download-result:hover {
-            background: #3ab4d9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(76, 201, 240, 0.5);
-        }
-
-        .download-result:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 60px 0;
-            background: white;
-            border-radius: 30px 30px 0 0;
-        }
-
-        .features-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--light);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 15px;
-            color: var(--dark);
+        .feature-card p {
+            font-size: 0.95em;
+            color: #555;
         }
 
         /* Footer */
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 40px 0 20px;
+            background-color: var(--dark-bg);
+            color: var(--light-text-color);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto; /* Pushes footer to the bottom */
         }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-col h3 {
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--accent);
-        }
-
-        .footer-links {
+        footer .footer-links ul {
             list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: #adb5bd;
-            text-decoration: none;
-            transition: var(--transition);
-            display: block;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
             display: flex;
             justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 50%;
-            transition: var(--transition);
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        footer .footer-links ul li {
+            margin: 0 15px;
+        }
+        footer .footer-links ul li a {
+            color: var(--light-text-color);
             text-decoration: none;
-            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        footer .footer-links ul li a:hover {
+            color: var(--primary-color);
+        }
+        .social-icons a {
+            color: var(--light-text-color);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+        footer p {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #ccc;
         }
 
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #adb5bd;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2.3rem;
-            }
-            
-            .tool-body {
-                flex-direction: column;
-            }
-        }
-
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .hero {
-                padding: 40px 0;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .tool-header h2 {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .header-container {
+            header .container {
                 flex-direction: column;
-                gap: 15px;
+                text-align: center;
             }
-            
-            .nav-menu {
-                display: flex;
-                flex-wrap: wrap;
+            header .logo {
+                margin-bottom: 15px;
+            }
+            header nav ul {
+                margin-bottom: 15px;
                 justify-content: center;
-                margin-top: 15px;
             }
-            
-            .nav-menu li {
-                margin: 5px 10px;
+            header nav ul li {
+                margin: 0 10px;
             }
-            
-            .hero h1 {
-                font-size: 1.8rem;
+            .welcome-banner h1 {
+                font-size: 2em;
             }
-            
-            .hero p {
-                font-size: 1rem;
+            .welcome-banner p {
+                font-size: 1em;
             }
-            
-            .tool-functions {
+            .tool-buttons {
+                grid-template-columns: 1fr; /* Stack buttons vertically */
+            }
+            .tool-button {
                 padding: 20px;
+            }
+            .features-section h2 {
+                font-size: 2em;
+            }
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+            footer .footer-links ul {
+                flex-direction: column;
+            }
+            footer .footer-links ul li {
+                margin: 5px 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+
     <header>
-        <div class="container header-container">
-            <div class="logo">
-                <i class="fas fa-images"></i>
-                ImageTools<span style="color: var(--accent);">Pro</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-                <li><a href="#"><i class="fas fa-question-circle"></i> Support</a></li>
-                <li><a href="#" class="download-btn"><i class="fab fa-android"></i> Download App</a></li>
-            </ul>
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
+        <div class="container">
+            <a href="#" class="logo">MultiTool App</a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="mailto:contact@yourdomain.com" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                    <li><a href="mailto:support@yourdomain.com" target="_blank" rel="noopener noreferrer">Support</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=your.app.package" class="download-app" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-android"></i> Download App
+                    </a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="hero">
-        <div class="container">
-            <h1>All-in-One Image Editing Tools</h1>
-            <p>Powerful, free online tools for background removal, compression, resizing, and merging. No installation required!</p>
-            <a href="#tools" class="cta-btn">Get Started Now</a>
-        </div>
-    </section>
+    <main>
+        <section class="welcome-banner" id="home">
+            <h1>Your All-in-One Image Toolkit</h1>
+            <p>Unlock the power of images with our free online tools for background removal, compression, resizing, and merging. Fast, simple, and high quality.</p>
+        </section>
 
-    <!-- Tools Section -->
-    <section class="tools-section container" id="tools">
-        <h2 class="section-title">Our Powerful Tools</h2>
-        <div class="tools-container">
-            <!-- Background Remover -->
-            <div class="tool-card" data-tool="bg-remover">
-                <div class="tool-icon">
+        <section class="container">
+            <div class="tool-buttons">
+                <div class="tool-button" data-tool="background-remover">
                     <i class="fas fa-cut"></i>
+                    <h3>Image Background Remover</h3>
                 </div>
-                <div class="tool-content">
-                    <h3>Background Remover</h3>
-                    <p>Remove image backgrounds instantly with AI-powered precision. Download with transparent background.</p>
-                    <div class="tool-btn">Use Tool</div>
-                </div>
-            </div>
-
-            <!-- Image Compressor -->
-            <div class="tool-card" data-tool="compressor">
-                <div class="tool-icon">
+                <div class="tool-button" data-tool="compressor">
                     <i class="fas fa-compress-alt"></i>
-                </div>
-                <div class="tool-content">
                     <h3>Image Compressor</h3>
-                    <p>Reduce image file size without losing quality. Optimize images for web and mobile devices.</p>
-                    <div class="tool-btn">Use Tool</div>
                 </div>
-            </div>
-
-            <!-- Image Resizer -->
-            <div class="tool-card" data-tool="resizer">
-                <div class="tool-icon">
+                <div class="tool-button" data-tool="resizer">
                     <i class="fas fa-expand-alt"></i>
-                </div>
-                <div class="tool-content">
                     <h3>Image Resizer</h3>
-                    <p>Resize images to any dimension while maintaining quality. Customize aspect ratio and dimensions.</p>
-                    <div class="tool-btn">Use Tool</div>
+                </div>
+                <div class="tool-button" data-tool="merger">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Merge Images</h3>
                 </div>
             </div>
 
-            <!-- Image Merger -->
-            <div class="tool-card" data-tool="merger">
-                <div class="tool-icon">
-                    <i class="fas fa-object-group"></i>
+            <!-- Tool Sections -->
+            <div id="background-remover-tool" class="tool-section">
+                <h2>Image Background Remover</h2>
+                <p class="message">
+                    <strong>Note:</strong> High-quality, general-purpose background removal purely client-side and for free is very complex and may not match professional software or AI services. This tool would typically require advanced machine learning models (e.g., via TensorFlow.js) or integration with server-side APIs for best results.
+                </p>
+                <div class="input-group">
+                    <label for="bgRemoverInput">Upload Image:</label>
+                    <input type="file" id="bgRemoverInput" accept="image/*">
                 </div>
-                <div class="tool-content">
-                    <h3>Image Merger</h3>
-                    <p>Combine multiple images into one. Add borders, backgrounds and customize layout.</p>
-                    <div class="tool-btn">Use Tool</div>
+                <button id="processBgRemover">Process Background Removal (Conceptual)</button>
+                <div class="preview-area">
+                    <img id="bgRemoverPreview" src="" alt="Background Remover Preview" style="display: none;">
+                    <p>Your processed image will appear here.</p>
+                </div>
+                <button id="downloadBgRemover" style="display: none;">Download Image</button>
+            </div>
+
+            <div id="compressor-tool" class="tool-section">
+                <h2>Image Compressor</h2>
+                <div class="input-group">
+                    <label for="compressorInput">Upload Image:</label>
+                    <input type="file" id="compressorInput" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label for="compressionQuality">Compression Quality: <span id="qualityValue">80</span>%</label>
+                    <input type="range" id="compressionQuality" min="10" max="100" value="80">
+                </div>
+                <button id="compressImage">Compress Image</button>
+                <div class="preview-area">
+                    <img id="compressorPreview" src="" alt="Compressor Preview" style="display: none;">
+                    <p id="compressorOriginalSize" style="display: none;"></p>
+                    <p id="compressorNewSize" style="display: none;"></p>
+                    <p>Your compressed image will appear here.</p>
+                </div>
+                <button id="downloadCompressor" style="display: none;">Download Image</button>
+            </div>
+
+            <div id="resizer-tool" class="tool-section">
+                <h2>Image Resizer</h2>
+                <div class="input-group">
+                    <label for="resizerInput">Upload Image:</label>
+                    <input type="file" id="resizerInput" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label>Current Dimensions: <span id="originalDimensions">N/A</span></label>
+                </div>
+                <div class="input-group">
+                    <label for="newWidth">New Width (px):</label>
+                    <input type="number" id="newWidth" placeholder="e.g., 800">
+                </div>
+                <div class="input-group">
+                    <label for="newHeight">New Height (px):</label>
+                    <input type="number" id="newHeight" placeholder="e.g., 600">
+                </div>
+                 <div class="input-group">
+                    <input type="checkbox" id="maintainAspectRatio" checked>
+                    <label for="maintainAspectRatio">Maintain Aspect Ratio</label>
+                </div>
+                <button id="resizeImage">Resize Image</button>
+                <div class="preview-area">
+                    <img id="resizerPreview" src="" alt="Resizer Preview" style="display: none;">
+                    <p>Your resized image will appear here.</p>
+                </div>
+                <button id="downloadResizer" style="display: none;">Download Image</button>
+            </div>
+
+            <div id="merger-tool" class="tool-section">
+                <h2>Merge Images</h2>
+                <p class="message">
+                    Upload multiple images to merge them. You'll need to define how they should be arranged (e.g., side-by-side, top-bottom) and any borders/backgrounds.
+                </p>
+                <div class="input-group">
+                    <label for="mergerInput1">Upload Image 1:</label>
+                    <input type="file" id="mergerInput1" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label for="mergerInput2">Upload Image 2:</label>
+                    <input type="file" id="mergerInput2" accept="image/*">
+                </div>
+                <!-- More inputs or dynamic adding of inputs would be needed for multiple images -->
+                <div class="input-group">
+                    <label for="mergeBorderColor">Border Color:</label>
+                    <input type="color" id="mergeBorderColor" value="#000000">
+                </div>
+                <div class="input-group">
+                    <label for="mergeBorderWidth">Border Width (px):</label>
+                    <input type="number" id="mergeBorderWidth" value="5" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="mergeBgColor">Background Color:</label>
+                    <input type="color" id="mergeBgColor" value="#ffffff">
+                </div>
+                <button id="mergeImages">Merge Images (Conceptual)</button>
+                <div class="preview-area">
+                    <canvas id="mergerCanvas" style="display: none;"></canvas>
+                    <p>Your merged image will appear here.</p>
+                </div>
+                <button id="downloadMerger" style="display: none;">Download Image</button>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <h2>Key Features of Our Tools</h2>
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <h3>Effortless Background Removal</h3>
+                        <p>Quickly remove backgrounds from your images. Ideal for product photos, profile pictures, and more. Experience clean cutouts with ease.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Optimized Image Compression</h3>
+                        <p>Reduce file sizes without compromising quality. Perfect for web optimization, faster loading times, and saving storage space.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Precise Image Resizing</h3>
+                        <p>Adjust image dimensions to fit any requirement. Resize photos for social media, print, or web banners while maintaining aspect ratio or custom sizes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Creative Image Merging</h3>
+                        <p>Combine multiple images into one stunning composition. Add custom borders and backgrounds to create unique collages or layouts.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+    </main>
 
-        <!-- Tool Functions -->
-        <div class="tool-functions" id="tool-functions">
-            <!-- Content will be dynamically loaded here -->
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <h2 class="section-title">Powerful Features</h2>
-            <div class="features-container">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cloud-download-alt"></i>
-                    </div>
-                    <h3>High-Quality Downloads</h3>
-                    <p>Download your processed images in maximum quality with various format options.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>Instant Preview</h3>
-                    <p>Preview your images before downloading to ensure perfect results every time.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Privacy Focused</h3>
-                    <p>All processing happens in your browser. Your images never leave your device.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile Optimized</h3>
-                    <p>Works seamlessly on all devices - desktop, tablet, and mobile phones.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>ImageTools Pro</h3>
-                    <p>Your all-in-one solution for image editing needs. Free, fast, and powerful tools for everyone.</p>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Background Remover</a></li>
-                        <li><a href="#">Image Compressor</a></li>
-                        <li><a href="#">Image Resizer</a></li>
-                        <li><a href="#">Image Merger</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Feedback</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" target="_blank">Privacy Policy</a></li>
-                        <li><a href="#" target="_blank">Terms & Conditions</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">Data Security</a></li>
-                    </ul>
-                </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                    <li><a href="#" target="_blank" rel="noopener noreferrer">Terms & Conditions</a></li>
+                </ul>
             </div>
-            
-            <div class="copyright">
-                &copy; 2023 ImageTools Pro. All rights reserved.
+            <div class="social-icons">
+                <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com/company/yourcompany" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
             </div>
+            <p>© 2023 MultiTool App. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tool selection functionality
-            const toolCards = document.querySelectorAll('.tool-card');
-            const toolFunctions = document.getElementById('tool-functions');
-            
-            toolCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const toolType = this.getAttribute('data-tool');
-                    loadTool(toolType);
-                    
-                    // Scroll to tool functions
-                    toolFunctions.scrollIntoView({behavior: 'smooth'});
+        document.addEventListener('DOMContentLoaded', () => {
+            const toolButtons = document.querySelectorAll('.tool-button');
+            const toolSections = document.querySelectorAll('.tool-section');
+
+            // Function to show/hide tool sections
+            function showTool(toolId) {
+                toolSections.forEach(section => {
+                    section.classList.remove('active');
                 });
-            });
-            
-            // Load tool function template
-            function loadTool(toolType) {
-                let toolTitle = '';
-                let toolDescription = '';
-                let specificOptions = '';
-                
-                switch(toolType) {
-                    case 'bg-remover':
-                        toolTitle = 'Background Remover';
-                        toolDescription = 'Upload an image to remove the background automatically. Download with transparent background.';
-                        specificOptions = `
-                            <div class="option-group">
-                                <label class="option-label">Precision Level</label>
-                                <select class="option-input" id="precision-level">
-                                    <option value="low">Low (Faster)</option>
-                                    <option value="medium" selected>Medium (Recommended)</option>
-                                    <option value="high">High (Best Quality)</option>
-                                </select>
-                            </div>
-                            <div class="option-group">
-                                <label class="option-label">Output Format</label>
-                                <select class="option-input" id="output-format">
-                                    <option value="png">PNG (Transparent)</option>
-                                    <option value="jpg">JPG (White Background)</option>
-                                </select>
-                            </div>
-                        `;
-                        break;
-                        
-                    case 'compressor':
-                        toolTitle = 'Image Compressor';
-                        toolDescription = 'Reduce image file size without noticeable quality loss. Perfect for web optimization.';
-                        specificOptions = `
-                            <div class="option-group">
-                                <label class="option-label">Compression Level</label>
-                                <input type="range" class="option-input" id="compression-level" min="0" max="100" value="80">
-                                <div class="compression-value">Quality: 80%</div>
-                            </div>
-                            <div class="option-group">
-                                <label class="option-label">Max Width/Height</label>
-                                <input type="number" class="option-input" id="max-dimension" placeholder="Original size" min="100" max="5000">
-                            </div>
-                        `;
-                        break;
-                        
-                    case 'resizer':
-                        toolTitle = 'Image Resizer';
-                        toolDescription = 'Resize images to specific dimensions while maintaining aspect ratio and quality.';
-                        specificOptions = `
-                            <div class="option-group">
-                                <label class="option-label">Width (px)</label>
-                                <input type="number" class="option-input" id="resize-width" placeholder="Original width">
-                            </div>
-                            <div class="option-group">
-                                <label class="option-label">Height (px)</label>
-                                <input type="number" class="option-input" id="resize-height" placeholder="Original height">
-                            </div>
-                            <div class="option-group">
-                                <label>
-                                    <input type="checkbox" id="maintain-aspect" checked> Maintain Aspect Ratio
-                                </label>
-                            </div>
-                        `;
-                        break;
-                        
-                    case 'merger':
-                        toolTitle = 'Image Merger';
-                        toolDescription = 'Combine multiple images into a single composition with customizable layout and backgrounds.';
-                        specificOptions = `
-                            <div class="option-group">
-                                <label class="option-label">Layout</label>
-                                <select class="option-input" id="layout-type">
-                                    <option value="horizontal">Horizontal</option>
-                                    <option value="vertical">Vertical</option>
-                                    <option value="grid">Grid (2x2)</option>
-                                </select>
-                            </div>
-                            <div class="option-group">
-                                <label class="option-label">Background Color</label>
-                                <input type="color" class="option-input" id="bg-color" value="#ffffff">
-                            </div>
-                            <div class="option-group">
-                                <label class="option-label">Border Size (px)</label>
-                                <input type="number" class="option-input" id="border-size" min="0" max="50" value="0">
-                            </div>
-                            <div class="option-group">
-                                <label class="option-label">Border Color</label>
-                                <input type="color" class="option-input" id="border-color" value="#000000">
-                            </div>
-                        `;
-                        break;
-                }
-                
-                toolFunctions.innerHTML = `
-                    <div class="tool-header">
-                        <h2>${toolTitle}</h2>
-                        <button class="close-tool">&times;</button>
-                    </div>
-                    <p>${toolDescription}</p>
-                    
-                    <div class="tool-body">
-                        <div class="upload-area">
-                            <div class="upload-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <h3>Upload Your Image</h3>
-                            <p>Drag & drop or click to browse files</p>
-                            <input type="file" id="image-upload" class="file-input" accept="image/*">
-                            <label for="image-upload" class="file-label">Choose File</label>
-                        </div>
-                        
-                        <div class="preview-area">
-                            <h3 class="preview-title">Preview</h3>
-                            <div class="preview-container">
-                                <img id="original-preview" class="preview-img" alt="Original preview">
-                                <div class="preview-placeholder">
-                                    <i class="fas fa-image" style="font-size: 3rem; color: #ccc;"></i>
-                                    <p>Upload an image to see preview</p>
-                                </div>
-                            </div>
-                            
-                            <div class="options-area">
-                                <h3 class="options-title">Options</h3>
-                                ${specificOptions}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="download-btn-container">
-                        <button class="download-result" disabled>Download Result</button>
-                    </div>
-                `;
-                
-                toolFunctions.style.display = 'block';
-                
-                // Add event listener for close button
-                document.querySelector('.close-tool').addEventListener('click', function() {
-                    toolFunctions.style.display = 'none';
-                });
-                
-                // Add file upload functionality
-                const fileInput = document.getElementById('image-upload');
-                const originalPreview = document.getElementById('original-preview');
-                const downloadBtn = document.querySelector('.download-result');
-                
-                fileInput.addEventListener('change', function(e) {
-                    if (e.target.files && e.target.files[0]) {
-                        const reader = new FileReader();
-                        
-                        reader.onload = function(event) {
-                            originalPreview.src = event.target.result;
-                            originalPreview.style.display = 'block';
-                            document.querySelector('.preview-placeholder').style.display = 'none';
-                            downloadBtn.disabled = false;
+                const activeTool = document.getElementById(`${toolId}-tool`);
+                if (activeTool) {
+                    activeTool.classList.add('active');
+                    // Reset previews when switching tools
+                    const previewArea = activeTool.querySelector('.preview-area img, .preview-area canvas');
+                    if (previewArea) {
+                        previewArea.style.display = 'none';
+                        if (previewArea.tagName === 'IMG') previewArea.src = '';
+                        else {
+                            const ctx = previewArea.getContext('2d');
+                            ctx.clearRect(0, 0, previewArea.width, previewArea.height);
                         }
-                        
-                        reader.readAsDataURL(e.target.files[0]);
                     }
-                });
-                
-                // Add compression slider functionality
-                if (toolType === 'compressor') {
-                    const compressionSlider = document.getElementById('compression-level');
-                    const compressionValue = document.querySelector('.compression-value');
-                    
-                    compressionSlider.addEventListener('input', function() {
-                        compressionValue.textContent = `Quality: ${this.value}%`;
-                    });
+                    const downloadBtn = activeTool.querySelector('[id^="download"]');
+                    if (downloadBtn) downloadBtn.style.display = 'none';
                 }
             }
-            
-            // Initialize first tool for demo
-            loadTool('bg-remover');
+
+            // Event listeners for tool selection buttons
+            toolButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const toolId = button.dataset.tool;
+                    showTool(toolId);
+                });
+            });
+
+            // --- Generic Image Handling Functions ---
+            let currentFile = null;
+            let processedDataURL = null; // To store the processed image data for download
+
+            function handleFileUpload(inputElement, previewElement, callback) {
+                const file = inputElement.files[0];
+                if (!file) return;
+
+                currentFile = file;
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        if (previewElement.tagName === 'IMG') {
+                            previewElement.src = img.src;
+                            previewElement.style.display = 'block';
+                        }
+                        callback(img, file.size); // Pass the image and original size to the specific tool logic
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function downloadImage(dataURL, filename) {
+                const a = document.createElement('a');
+                a.href = dataURL;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+
+            // --- Image Compressor Logic ---
+            const compressorInput = document.getElementById('compressorInput');
+            const compressionQuality = document.getElementById('compressionQuality');
+            const qualityValueSpan = document.getElementById('qualityValue');
+            const compressImageBtn = document.getElementById('compressImage');
+            const compressorPreview = document.getElementById('compressorPreview');
+            const downloadCompressorBtn = document.getElementById('downloadCompressor');
+            const compressorOriginalSize = document.getElementById('compressorOriginalSize');
+            const compressorNewSize = document.getElementById('compressorNewSize');
+
+            compressionQuality.addEventListener('input', () => {
+                qualityValueSpan.textContent = compressionQuality.value;
+            });
+
+            compressorInput.addEventListener('change', () => {
+                handleFileUpload(compressorInput, compressorPreview, (img, originalSize) => {
+                    // Display original size
+                    compressorOriginalSize.textContent = `Original Size: ${(originalSize / 1024).toFixed(2)} KB`;
+                    compressorOriginalSize.style.display = 'block';
+                    compressorNewSize.style.display = 'none'; // Hide new size until processed
+                    downloadCompressorBtn.style.display = 'none'; // Hide download button until processed
+                });
+            });
+
+            compressImageBtn.addEventListener('click', () => {
+                if (!currentFile) {
+                    alert('Please upload an image first.');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+
+                        const quality = parseFloat(compressionQuality.value) / 100;
+                        processedDataURL = canvas.toDataURL('image/jpeg', quality);
+
+                        compressorPreview.src = processedDataURL;
+                        compressorPreview.style.display = 'block';
+
+                        // Calculate and display new size
+                        fetch(processedDataURL)
+                            .then(res => res.blob())
+                            .then(blob => {
+                                compressorNewSize.textContent = `Compressed Size: ${(blob.size / 1024).toFixed(2)} KB`;
+                                compressorNewSize.style.display = 'block';
+                            });
+
+                        downloadCompressorBtn.style.display = 'block';
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(currentFile);
+            });
+
+            downloadCompressorBtn.addEventListener('click', () => {
+                if (processedDataURL) {
+                    downloadImage(processedDataURL, `compressed_${currentFile.name.split('.')[0]}.jpg`);
+                }
+            });
+
+            // --- Image Resizer Logic ---
+            const resizerInput = document.getElementById('resizerInput');
+            const originalDimensionsSpan = document.getElementById('originalDimensions');
+            const newWidthInput = document.getElementById('newWidth');
+            const newHeightInput = document.getElementById('newHeight');
+            const maintainAspectRatioCheckbox = document.getElementById('maintainAspectRatio');
+            const resizeImageBtn = document.getElementById('resizeImage');
+            const resizerPreview = document.getElementById('resizerPreview');
+            const downloadResizerBtn = document.getElementById('downloadResizer');
+
+            let originalImage = null; // Store the original image object for resizing
+
+            resizerInput.addEventListener('change', () => {
+                handleFileUpload(resizerInput, resizerPreview, (img) => {
+                    originalImage = img;
+                    originalDimensionsSpan.textContent = `${img.width}px x ${img.height}px`;
+                    newWidthInput.value = img.width;
+                    newHeightInput.value = img.height;
+                    downloadResizerBtn.style.display = 'none';
+                });
+            });
+
+            // Auto-update other dimension when aspect ratio is maintained
+            newWidthInput.addEventListener('input', () => {
+                if (maintainAspectRatioCheckbox.checked && originalImage) {
+                    const newWidth = parseFloat(newWidthInput.value);
+                    if (!isNaN(newWidth) && newWidth > 0) {
+                        newHeightInput.value = Math.round((newWidth / originalImage.width) * originalImage.height);
+                    }
+                }
+            });
+
+            newHeightInput.addEventListener('input', () => {
+                if (maintainAspectRatioCheckbox.checked && originalImage) {
+                    const newHeight = parseFloat(newHeightInput.value);
+                    if (!isNaN(newHeight) && newHeight > 0) {
+                        newWidthInput.value = Math.round((newHeight / originalImage.height) * originalImage.width);
+                    }
+                }
+            });
+
+            resizeImageBtn.addEventListener('click', () => {
+                if (!originalImage) {
+                    alert('Please upload an image first.');
+                    return;
+                }
+
+                let newWidth = parseFloat(newWidthInput.value);
+                let newHeight = parseFloat(newHeightInput.value);
+
+                if (isNaN(newWidth) || newWidth <= 0 || isNaN(newHeight) || newHeight <= 0) {
+                    alert('Please enter valid positive dimensions.');
+                    return;
+                }
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                // Draw the image scaled to new dimensions
+                ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
+
+                processedDataURL = canvas.toDataURL('image/png'); // Use PNG for quality for resizer
+                resizerPreview.src = processedDataURL;
+                resizerPreview.style.display = 'block';
+                downloadResizerBtn.style.display = 'block';
+            });
+
+            downloadResizerBtn.addEventListener('click', () => {
+                if (processedDataURL) {
+                    downloadImage(processedDataURL, `resized_${currentFile.name.split('.')[0]}.png`);
+                }
+            });
+
+            // --- Image Merger Logic ---
+            const mergerInput1 = document.getElementById('mergerInput1');
+            const mergerInput2 = document.getElementById('mergerInput2');
+            const mergeBorderColor = document.getElementById('mergeBorderColor');
+            const mergeBorderWidth = document.getElementById('mergeBorderWidth');
+            const mergeBgColor = document.getElementById('mergeBgColor');
+            const mergeImagesBtn = document.getElementById('mergeImages');
+            const mergerCanvas = document.getElementById('mergerCanvas');
+            const downloadMergerBtn = document.getElementById('downloadMerger');
+
+            let loadedImages = { img1: null, img2: null };
+
+            mergerInput1.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => { loadedImages.img1 = img; };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            mergerInput2.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => { loadedImages.img2 = img; };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            mergeImagesBtn.addEventListener('click', () => {
+                if (!loadedImages.img1 || !loadedImages.img2) {
+                    alert('Please upload both images to merge.');
+                    return;
+                }
+
+                const img1 = loadedImages.img1;
+                const img2 = loadedImages.img2;
+                const borderWidth = parseInt(mergeBorderWidth.value);
+                const borderColor = mergeBorderColor.value;
+                const bgColor = mergeBgColor.value;
+
+                // For simplicity, let's merge them side-by-side
+                const totalWidth = img1.width + img2.width + (borderWidth * 3); // Two images + 3 borders (left, middle, right)
+                const maxHeight = Math.max(img1.height, img2.height);
+                const totalHeight = maxHeight + (borderWidth * 2); // Top and bottom borders
+
+                mergerCanvas.width = totalWidth;
+                mergerCanvas.height = totalHeight;
+                const ctx = mergerCanvas.getContext('2d');
+
+                // Draw background
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(0, 0, totalWidth, totalHeight);
+
+                // Draw border
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = borderWidth;
+                ctx.strokeRect(0, 0, totalWidth, totalHeight); // Outer border
+
+                // Draw images
+                // Position img1
+                ctx.drawImage(img1, borderWidth, (totalHeight - img1.height) / 2);
+                // Position img2
+                ctx.drawImage(img2, img1.width + (borderWidth * 2), (totalHeight - img2.height) / 2);
+
+                // Draw middle border
+                ctx.beginPath();
+                ctx.moveTo(img1.width + borderWidth, 0);
+                ctx.lineTo(img1.width + borderWidth, totalHeight);
+                ctx.stroke();
+
+                processedDataURL = mergerCanvas.toDataURL('image/png');
+                mergerCanvas.style.display = 'block';
+                downloadMergerBtn.style.display = 'block';
+            });
+
+            downloadMergerBtn.addEventListener('click', () => {
+                if (processedDataURL) {
+                    downloadImage(processedDataURL, `merged_images.png`);
+                }
+            });
+
+            // --- Background Remover (Conceptual Placeholder) ---
+            const bgRemoverInput = document.getElementById('bgRemoverInput');
+            const processBgRemoverBtn = document.getElementById('processBgRemover');
+            const bgRemoverPreview = document.getElementById('bgRemoverPreview');
+            const downloadBgRemoverBtn = document.getElementById('downloadBgRemover');
+
+            bgRemoverInput.addEventListener('change', () => {
+                handleFileUpload(bgRemoverInput, bgRemoverPreview, () => {
+                    downloadBgRemoverBtn.style.display = 'none';
+                });
+            });
+
+            processBgRemoverBtn.addEventListener('click', () => {
+                if (!currentFile) {
+                    alert('Please upload an image first.');
+                    return;
+                }
+                alert('Background removal is a complex feature. For a truly high-quality result, consider integrating a dedicated AI library (like TensorFlow.js with a pre-trained segmentation model) or using a server-side API. This button currently serves as a placeholder.');
+                // In a real implementation, you would:
+                // 1. Load the image onto a canvas.
+                // 2. Apply a sophisticated algorithm or a pre-trained ML model to identify the foreground.
+                // 3. Create a new image/canvas with the background removed (e.g., transparent).
+                // 4. Update bgRemoverPreview.src and processedDataURL.
+                // 5. Show downloadBgRemoverBtn.
+                // Example of placeholder output:
+                // bgRemoverPreview.src = 'https://via.placeholder.com/400x300/00FF00/000000?text=BG+Removed+Mock'; // Mock output
+                // bgRemoverPreview.style.display = 'block';
+                // processedDataURL = bgRemoverPreview.src; // For download
+                // downloadBgRemoverBtn.style.display = 'block';
+            });
+
+            downloadBgRemoverBtn.addEventListener('click', () => {
+                if (processedDataURL) {
+                    downloadImage(processedDataURL, `bgremoved_${currentFile.name.split('.')[0]}.png`);
+                }
+            });
         });
     </script>
+
 </body>
 </html>
