@@ -20,6 +20,9 @@
     <meta property="twitter:description" content="Compress, Resize, and Merge Images Online for Free!">
     <meta property="twitter:image" content="https://yourwebsite.com/preview-image.jpg"> <!-- IMPORTANT: Replace with a URL to your preview image -->
 
+    <!-- Material Icons for Android symbol and Social Media icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <style>
         /* Basic Reset & Body Styling */
         body {
@@ -617,7 +620,10 @@
             // Ensure the main tool sections container is visible
             if (toolSectionsContainer) {
                 toolSectionsContainer.classList.remove('hidden');
-                console.log('Tool sections container made visible.');
+                // *** TEMPORARY DEBUGGING STYLE ***
+                toolSectionsContainer.style.outline = '5px solid red'; // Add a clear border
+                toolSectionsContainer.style.minHeight = '300px'; // Ensure it has height
+                console.log('Tool sections container made visible and debug styles applied.');
             } else {
                 console.error('Error: toolSectionsContainer not found!');
             }
@@ -625,7 +631,10 @@
             const targetToolSection = document.getElementById(`${toolId}-tool`);
             if (targetToolSection) {
                 targetToolSection.classList.remove('hidden'); // Show the selected tool
-                console.log(`Tool section '${toolId}-tool' made visible.`);
+                // *** TEMPORARY DEBUGGING STYLE ***
+                targetToolSection.style.backgroundColor = '#e0ffe0'; // Light green background for visibility
+                targetToolSection.style.border = '2px dashed blue'; // Add a clear border
+                console.log(`Tool section '${toolId}-tool' made visible and debug styles applied.`);
                 targetToolSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll to it
             } else {
                 console.error(`Error: Tool section with ID '${toolId}-tool' not found.`);
@@ -1002,13 +1011,6 @@
             downloadMergedBtn.download = `merged_image_${Date.now()}.jpg`;
             downloadMergedBtn.classList.remove('hidden');
         }
-
-        // Dynamically add Material Icons stylesheet (for Android, Facebook, Instagram, LinkedIn, YouTube icon placeholders)
-        // This ensures the icons appear even if you don't manually link the stylesheet in <head>
-        const link = document.createElement('link');
-        link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-        link.rel = 'stylesheet';
-        document.head.appendChild(link);
     </script>
 </body>
 </html>
