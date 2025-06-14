@@ -602,24 +602,50 @@
 
         // Global elements for tool selection
         const toolButtons = document.querySelectorAll('.tool-button');
+        console.log('JS Load: Found tool buttons:', toolButtons); // Debugging
         const toolSectionsContainer = document.getElementById('tool-sections');
+        console.log('JS Load: Found tool sections container:', toolSectionsContainer); // Debugging
         const allToolSections = document.querySelectorAll('.tool-section');
+        console.log('JS Load: Found all tool sections:', allToolSections); // Debugging
+
 
         // Function to show a specific tool section and scroll to it
         function showToolSection(toolId) {
+            console.log('showToolSection called for:', toolId); // Debugging
             allToolSections.forEach(section => section.classList.add('hidden')); // Hide all tool sections
-            toolSectionsContainer.classList.remove('hidden'); // Show the main tool container
-            document.getElementById(`${toolId}-tool`).classList.remove('hidden'); // Show the selected tool
-            document.getElementById(`${toolId}-tool`).scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll to it
+            
+            // Ensure the main tool sections container is visible
+            if (toolSectionsContainer) {
+                toolSectionsContainer.classList.remove('hidden');
+                console.log('Tool sections container made visible.');
+            } else {
+                console.error('Error: toolSectionsContainer not found!');
+            }
+
+            const targetToolSection = document.getElementById(`${toolId}-tool`);
+            if (targetToolSection) {
+                targetToolSection.classList.remove('hidden'); // Show the selected tool
+                console.log(`Tool section '${toolId}-tool' made visible.`);
+                targetToolSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll to it
+            } else {
+                console.error(`Error: Tool section with ID '${toolId}-tool' not found.`);
+            }
         }
 
         // Event listeners for tool selection buttons
-        toolButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const toolId = button.dataset.tool;
-                showToolSection(toolId);
+        if (toolButtons.length > 0) {
+            toolButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    console.log('Tool button clicked:', button.textContent); // Debugging
+                    const toolId = button.dataset.tool;
+                    showToolSection(toolId);
+                });
             });
-        });
+            console.log('Event listeners attached to tool buttons.');
+        } else {
+            console.warn('No tool buttons found to attach event listeners to.');
+        }
+
 
         // Helper to convert Data URL to Blob for size calculation
         function dataURLtoBlob(dataurl) {
@@ -646,35 +672,41 @@
         let originalCompressImage = null; // Stores the original image object
 
         // Event listener for file input change
-        compressImageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    originalCompressImage = new Image();
-                    originalCompressImage.onload = () => {
-                        compressImage(); // Once image is loaded, compress it
+        if (compressImageInput) { // Defensive check
+            compressImageInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        originalCompressImage = new Image();
+                        originalCompressImage.onload = () => {
+                            compressImage(); // Once image is loaded, compress it
+                        };
+                        originalCompressImage.src = event.target.result; // Load image data
                     };
-                    originalCompressImage.src = event.target.result; // Load image data
-                };
-                reader.readAsDataURL(file); // Read file as Data URL
-            } else {
-                // Clear preview if no file selected
-                compressedPreview.classList.add('hidden');
-                compressCanvas.classList.add('hidden');
-                downloadCompressedBtn.classList.add('hidden');
-                compressedInfo.textContent = '';
-                originalCompressImage = null;
-            }
-        });
+                    reader.readAsDataURL(file); // Read file as Data URL
+                } else {
+                    // Clear preview if no file selected
+                    compressedPreview.classList.add('hidden');
+                    compressCanvas.classList.add('hidden');
+                    downloadCompressedBtn.classList.add('hidden');
+                    compressedInfo.textContent = '';
+                    originalCompressImage = null;
+                }
+            });
+        }
+
 
         // Event listener for quality slider change
-        compressionQuality.addEventListener('input', () => {
-            qualityValueSpan.textContent = compressionQuality.value; // Update quality display
-            if (originalCompressImage) {
-                compressImage(); // Re-compress with new quality
-            }
-        });
+        if (compressionQuality) { // Defensive check
+            compressionQuality.addEventListener('input', () => {
+                qualityValueSpan.textContent = compressionQuality.value; // Update quality display
+                if (originalCompressImage) {
+                    compressImage(); // Re-compress with new quality
+                }
+            });
+        }
+
 
         // Main compression function
         function compressImage() {
@@ -724,59 +756,69 @@
         let currentImageAspectRatio = 1;
 
         // Event listener for file input change
-        resizeImageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    originalResizeImage = new Image();
-                    originalResizeImage.onload = () => {
-                        // Set current aspect ratio and initial dimensions
-                        currentImageAspectRatio = originalResizeImage.naturalWidth / originalResizeImage.naturalHeight;
-                        resizeWidthInput.value = originalResizeImage.naturalWidth;
-                        resizeHeightInput.value = originalResizeImage.naturalHeight;
-                        resizeImage();
+        if (resizeImageInput) { // Defensive check
+            resizeImageInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        originalResizeImage = new Image();
+                        originalResizeImage.onload = () => {
+                            // Set current aspect ratio and initial dimensions
+                            currentImageAspectRatio = originalResizeImage.naturalWidth / originalResizeImage.naturalHeight;
+                            resizeWidthInput.value = originalResizeImage.naturalWidth;
+                            resizeHeightInput.value = originalResizeImage.naturalHeight;
+                            resizeImage();
+                        };
+                        originalResizeImage.src = event.target.result;
                     };
-                    originalResizeImage.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                // Clear preview if no file selected
-                resizedPreview.classList.add('hidden');
-                resizeCanvas.classList.add('hidden');
-                downloadResizedBtn.classList.add('hidden');
-                resizedInfo.textContent = '';
-                originalResizeImage = null;
-            }
-        });
+                    reader.readAsDataURL(file);
+                } else {
+                    // Clear preview if no file selected
+                    resizedPreview.classList.add('hidden');
+                    resizeCanvas.classList.add('hidden');
+                    downloadResizedBtn.classList.add('hidden');
+                    resizedInfo.textContent = '';
+                    originalResizeImage = null;
+                }
+            });
+        }
+
 
         // Event listeners for width/height input and aspect ratio lock
-        resizeWidthInput.addEventListener('input', () => {
-            if (aspectRatioLock.checked && originalResizeImage) {
-                resizeHeightInput.value = Math.round(resizeWidthInput.value / currentImageAspectRatio);
-            }
-            if (originalResizeImage) resizeImage();
-        });
-
-        resizeHeightInput.addEventListener('input', () => {
-            if (aspectRatioLock.checked && originalResizeImage) {
-                resizeWidthInput.value = Math.round(resizeHeightInput.value * currentImageAspectRatio);
-            }
-            if (originalResizeImage) resizeImage();
-        });
-
-        aspectRatioLock.addEventListener('change', () => {
-            if (aspectRatioLock.checked && originalResizeImage) {
-                // When re-locking, adjust height based on current width to maintain ratio
-                if (resizeWidthInput.value) {
+        if (resizeWidthInput) { // Defensive check
+            resizeWidthInput.addEventListener('input', () => {
+                if (aspectRatioLock.checked && originalResizeImage) {
                     resizeHeightInput.value = Math.round(resizeWidthInput.value / currentImageAspectRatio);
-                } else if (resizeHeightInput.value) {
-                     // If only height is set, adjust width
-                     resizeWidthInput.value = Math.round(resizeHeightInput.value * currentImageAspectRatio);
                 }
-            }
-            if (originalResizeImage) resizeImage();
-        });
+                if (originalResizeImage) resizeImage();
+            });
+        }
+
+        if (resizeHeightInput) { // Defensive check
+            resizeHeightInput.addEventListener('input', () => {
+                if (aspectRatioLock.checked && originalResizeImage) {
+                    resizeWidthInput.value = Math.round(resizeHeightInput.value * currentImageAspectRatio);
+                }
+                if (originalResizeImage) resizeImage();
+            });
+        }
+
+        if (aspectRatioLock) { // Defensive check
+            aspectRatioLock.addEventListener('change', () => {
+                if (aspectRatioLock.checked && originalResizeImage) {
+                    // When re-locking, adjust height based on current width to maintain ratio
+                    if (resizeWidthInput.value) {
+                        resizeHeightInput.value = Math.round(resizeWidthInput.value / currentImageAspectRatio);
+                    } else if (resizeHeightInput.value) {
+                         // If only height is set, adjust width
+                         resizeWidthInput.value = Math.round(resizeHeightInput.value * currentImageAspectRatio);
+                    }
+                }
+                if (originalResizeImage) resizeImage();
+            });
+        }
+
 
         // Main resizing function
         function resizeImage() {
@@ -848,12 +890,12 @@
         let img2 = null; // Stores the second image object
 
         // Event listeners for image inputs and options
-        mergeImageInput1.addEventListener('change', (e) => loadImageForMerge(e, 1));
-        mergeImageInput2.addEventListener('change', (e) => loadImageForMerge(e, 2));
-        mergeBorderSizeInput.addEventListener('input', mergeImages);
-        mergeBorderColorInput.addEventListener('input', mergeImages);
-        mergeBackgroundColorInput.addEventListener('input', mergeImages);
-        mergeOrientationSelect.addEventListener('change', mergeImages);
+        if (mergeImageInput1) mergeImageInput1.addEventListener('change', (e) => loadImageForMerge(e, 1));
+        if (mergeImageInput2) mergeImageInput2.addEventListener('change', (e) => loadImageForMerge(e, 2));
+        if (mergeBorderSizeInput) mergeBorderSizeInput.addEventListener('input', mergeImages);
+        if (mergeBorderColorInput) mergeBorderColorInput.addEventListener('input', mergeImages);
+        if (mergeBackgroundColorInput) mergeBackgroundColorInput.addEventListener('input', mergeImages);
+        if (mergeOrientationSelect) mergeOrientationSelect.addEventListener('change', mergeImages);
 
         // Function to load an image for merging
         function loadImageForMerge(event, imgNum) {
