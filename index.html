@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript">
-window.location.href = "https://sandmakingsilver.com?7vePl=1200839";
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi Tools Web App</title>
@@ -336,6 +332,40 @@ window.location.href = "https://sandmakingsilver.com?7vePl=1200839";
     </style>
 </head>
 <body>
+    <script>
+    const ad1 = "https://sandmakingsilver.com?qNfVq=1201658";
+    const ad2 = "https://sandmakingsilver.com?qNfVq=1201658";
+    const storageKey = "visitCounter";
+    const resetKey = "resetTimestamp";
+    const now = Date.now();
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    const lastReset = parseInt(localStorage.getItem(resetKey)) || 0;
+    if (now - lastReset > oneDay) {
+      localStorage.setItem(storageKey, "0");
+      localStorage.setItem(resetKey, now.toString());
+    }
+
+    let count = parseInt(localStorage.getItem(storageKey)) || 0;
+    count += 1;
+    localStorage.setItem(storageKey, count.toString());
+
+    function showLanding() {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("landing-content").style.display = "block";
+    }
+
+    if (count === 1) {
+      const popup = window.open(ad1, "_blank");
+      if (!popup) location.href = ad1; // fallback redirect
+    } else if (count === 2) {
+      const popup = window.open(ad2, "_blank");
+      if (!popup) location.href = ad2;
+    } else {
+      // 3rd click – show landing content
+      showLanding();
+    }
+  </script>
 
     <header>
         <nav>
@@ -346,10 +376,10 @@ window.location.href = "https://sandmakingsilver.com?7vePl=1200839";
                 <li><a href="#features-section" class="nav-link" data-target="features">
                      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V9h2v8zm4 0h-2V9h2v8z"></path></svg>
                     Features</a></li>
-                <li><a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer">
+                <li><a href="https://sandmakingsilver.com?qNfVq=1201658" target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3 20c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v16zm3.67-14L15.5 12 6.67 18V6z"></path></svg>
                     Get App</a></li>
-                <li><a href="https://otieu.com/4/9367847" target="_blank" rel="noopener noreferrer">
+                <li><a href="https://sandmakingsilver.com?qNfVq=1201658" target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V8h16v10zm-8-7c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
                     Pricing</a></li>
             </ul>
@@ -411,7 +441,7 @@ window.location.href = "https://sandmakingsilver.com?7vePl=1200839";
             <a href="https://www.linkedin.com/in/nawaj-uddin-666110351/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
             </a>
-            <a href="https://www.youtube.com/@PowerfulLifeLessonsBD" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <a href="https://www.youtube.com/@PowerfulLifeLessonsBD?sub_confirmation=1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
             </a>
         </div>
